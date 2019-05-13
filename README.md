@@ -26,7 +26,7 @@ T6 | ccyclegan_t6.py | Let's make G predict on train images to see if G is able 
 C2 | classifier2.py | ResNet50 pre-trained on ImageNet (RGG-images). Note: images from grayscale are transformed into RGB. | After 15 epochs we have accuracy-train ~ 95% and accuracy-test ~ 80%, which better than the winner of the Kaggle competition (ResNet was released in 2015 vs. the competition was organized in 2013) |
 T7 | ccyclegan_t7.py | Let's use ResNet50 pre-trained on ImageNet as D. | Generated images not very realistic and D-accuracy~100% |
 T8 | ccyclegan_t8.py | Change the training procedure removing shuffling and training D only on real given y_true samples, i.e. removing real given y_false samples. | Discriminator has ~100% accuracy on training set, reconstruction loss is low and G-loss is high compared with D-loss.  |
-T9 | ccyclegan_t9.py | Let's use ResNet50 pre-trained on ImageNet as D like T6 but let's freeze it. | Generated images not very realistic and reconstruction loss is low. |
+T9 | ccyclegan_t9.py | Let's use ResNet50 pre-trained on ImageNet as D like T7 but let's freeze it. | Generated images not very realistic and reconstruction loss is low. |
 
 
 
