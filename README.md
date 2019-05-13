@@ -12,6 +12,19 @@ You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challeng
 
 <img src="images/fer2013_sample.png" align="middle" /> 
 
+## Experiment Log
+
+Id | Code | Description | Notes | 
+T1 | ccyclegan_t1.py | Baseline - LGAN is replaced by the negative log likelihood objective by a least-squares loss [X. Mao, Q. Li, H. Xie, R. Y. Lau, Z. Wang, and S. P. Smolley. Least squares generative adversarial networks. In CVPR. IEEE, 2017]. Also, we
+adopt the technique of [Y. Taigman, A. Polyak, and L. Wolf. Unsupervised cross-domain image generation. In ICLR, 2017.] and regularize the generator to be near an identity mapping when real samples of the target domain are provided as the input to the generator. Weights are the same of the paper of CycleGAN, i.e. Identity loss = 0.1*Cycle-consistency loss| The generator has a loss too high vs. discriminator |
+--- | --- | --- | --- |
+--- | --- | --- | --- |
+--- | --- | --- | --- |
+--- | --- | --- | --- |
+--- | --- | --- | --- |
+
+
+
 
 
 
