@@ -16,8 +16,11 @@ You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challeng
 
 Id | Code | Description | Notes | 
 --- | --- | --- | --- |
-T1 | ccyclegan_t1.py | Baseline - GAN loss (the negative log likelihood objective) is replaced by a least-squares loss [X. Mao, Q. Li, H. Xie, R. Y. Lau, Z. Wang, and S. P. Smolley. Least squares generative adversarial networks. In CVPR. IEEE, 2017]. Also, we adopt the technique of [Y. Taigman, A. Polyak, and L. Wolf. Unsupervised cross-domain image generation. In ICLR, 2017.] and regularize the generator to be near an identity mapping when real samples of the target domain are provided as the input to the generator. Weights are the same of the paper of CycleGAN, i.e. Identity loss = 0.1*Cycle-consistency loss, Generator loss = 1. | The generator has a too high loss compared to discriminator. Let's try to increment the generator loss to 20. |
-T2 | ccyclegan_t2.py | Like T1 but the generator loss is is set to 20 | No reconstruction in 200 epochs – discriminator has 100% accuracy  |
+T1 | ccyclegan_t1.py | Baseline - GAN loss (the negative log likelihood objective) is replaced by a least-squares loss [X. Mao, Q. Li, H. Xie, R. Y. Lau, Z. Wang, and S. P. Smolley. Least squares generative adversarial networks. In CVPR. IEEE, 2017]. Also, we adopt the technique of [Y. Taigman, A. Polyak, and L. Wolf. Unsupervised cross-domain image generation. In ICLR, 2017.] and regularize the generator to be near an identity mapping when real samples of the target domain are provided as the input to the generator. Weights are the same of the paper of CycleGAN, i.e. Identity loss weight = 0.1*Cycle-consistency loss weight , Generator loss = 1. | The generator has a too high loss compared to discriminator. Let's try to increment the generator loss weight |
+T2 | ccyclegan_t2.py | Like T1 but the generator loss weight is is set to 20 | No reconstruction in 200 epochs – discriminator has 100% accuracy  |
+T3 | ccyclegan_t3.py | Like T1 but T1 but Identity loss weigh is 0, loss function for Generator is binary cross-entropy (weight is 7). | Generator loss too high vs. discriminator |
+T4 | ccyclegan_t4.py | Simplified the problem: only from domain “Neutral” to domain “Happy”, and from domain “Happy” to domain “Neutral”.  | Discriminator ~100% accuracy. This can be due to the fact that, reducing the problem in this way, also the training data is reduced and the generator does not benefit from this. This is an example of situation when Multi-task learning should be applied. Let's restore the problem at its original terms. |
+
 
 
 
