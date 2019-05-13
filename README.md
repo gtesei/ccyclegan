@@ -16,7 +16,9 @@ You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challeng
 
 Id | Code | Description | Notes | 
 --- | --- | --- | --- |
-T1 | ccyclegan_t1.py | Baseline - GAN loss (the negative log likelihood objective) is replacedby a least-squares loss [X. Mao, Q. Li, H. Xie, R. Y. Lau, Z. Wang, and S. P. Smolley. Least squares generative adversarial networks. In CVPR. IEEE, 2017]. Also, we adopt the technique of [Y. Taigman, A. Polyak, and L. Wolf. Unsupervised cross-domain image generation. In ICLR, 2017.] and regularize the generator to be near an identity mapping when real samples of the target domain are provided as the input to the generator. Weights are the same of the paper of CycleGAN, i.e. Identity loss = 0.1*Cycle-consistency loss| The generator has a loss too high vs. discriminator |
+T1 | ccyclegan_t1.py | Baseline - GAN loss (the negative log likelihood objective) is replaced by a least-squares loss [X. Mao, Q. Li, H. Xie, R. Y. Lau, Z. Wang, and S. P. Smolley. Least squares generative adversarial networks. In CVPR. IEEE, 2017]. Also, we adopt the technique of [Y. Taigman, A. Polyak, and L. Wolf. Unsupervised cross-domain image generation. In ICLR, 2017.] and regularize the generator to be near an identity mapping when real samples of the target domain are provided as the input to the generator. Weights are the same of the paper of CycleGAN, i.e. Identity loss = 0.1*Cycle-consistency loss, Generator loss = 1. | The generator has a too high loss compared to discriminator. Let's try to increment the generator loss to 20. |
+T2 | ccyclegan_t2.py | Like T1 but the generator loss is is set to 20 | No reconstruction in 200 epochs – discriminator has 100% accuracy  |
+
 
 
 
