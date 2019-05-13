@@ -22,8 +22,11 @@ T3 | ccyclegan_t3.py | Like T1 but Identity loss weight is set to 0, G-loss is b
 T4 | ccyclegan_t4.py | Let's simplify the problem: only from domain “Neutral” to domain “Happy”, and from domain “Happy” to domain “Neutral”. No other transformations. | Discriminator ~100% accuracy. This can be due to the fact that, reducing the problem in this way, also the training data is reduced and the generator does not benefit from this. This is an example of situation when Multi-task learning should be applied. Let's restore the problem to its original terms! |
 T5 | ccyclegan_t5.py | Like T1 but we concatenate the label encoded after the convolutions as shown in this paper: https://arxiv.org/ftp/arxiv/papers/1708/1708.09126.pdf. Identity loss is removed. | G-loss too high vs. D-loss |
 C1 | classifier.py | D of ccyclegan_t4.py | accuracy-train ~ 100%, accuracy-test ~70% which is compatible with the model winner of the Kaggle competition, i.e. 0.71161 |
-T6 | ccyclegan_t6.py | Let's make G predict on train images to see if G is able to generate realistic images. | Not very realistic. |
-C2 | classifier2.py | RosNet50 pre-trained on RGG-images. Note: images from grayscale are transformed into RGB. | After 15 epochs we have accuracy-train ~ 95% and accuracy-test ~ 80%, which better than the winner of the Kaggle competition (ResNet was released in 2015 vs. the competition was organized in 2013) |
+T6 | ccyclegan_t6.py | Let's make G predict on train images to see if G is able to generate realistic images. | Images not very realistic. |
+C2 | classifier2.py | ResNet50 pre-trained on ImageNet (RGG-images). Note: images from grayscale are transformed into RGB. | After 15 epochs we have accuracy-train ~ 95% and accuracy-test ~ 80%, which better than the winner of the Kaggle competition (ResNet was released in 2015 vs. the competition was organized in 2013) |
+T7 | ccyclegan_t7.py | Let's use ResNet50 pre-trained on ImageNet as D. | Generated images not very realistic and D-accuracy~100% |
+T8 | ccyclegan_t8.py | Change the training procedure removing shuffling and training D only with real|y vs. fake|y images, i.e. removing real|y' samples. | Discriminator has ~100% accuracy on training set, reconstruction loss is low and G-loss is high compared with D-loss  |
+T9 | ccyclegan_t9.py | Let's use ResNet50 pre-trained on ImageNet as D and let's freeze it. | Generated images not very realistic and reconstruction loss is low. |
 
 
 
