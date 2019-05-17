@@ -107,7 +107,7 @@ class DataLoader():
         if is_testing:
             return labels , batch_images
         for i in range(batch_size):
-            if np.random.random() > 10.5:
+            if np.random.random() > 0.5:
                 batch_images[i] = np.fliplr(batch_images[i])
         return labels , batch_images
 
@@ -128,7 +128,7 @@ class DataLoader():
             batch_images = self.img_vect_train[idx]
             labels = self.lab_vect_train[idx]
             for i in range(batch_size):
-                if np.random.random() > 10.5:
+                if np.random.random() > 0.5:
                     batch_images[i] = np.fliplr(batch_images[i])
             batch_images = np.resize(batch_images,
                                        (batch_size,self.img_res[0],self.img_res[1],self.img_res[2]))
