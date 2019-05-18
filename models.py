@@ -124,7 +124,7 @@ def build_generator_enc_dec(img_shape,gf,num_classes,channels,num_layers=4,f_siz
     return G_enc , G_dec
 
 
-def build_discriminator(img_shape,df,num_classes,num_layers=4):
+def build_discriminator(img_shape,df,num_classes,num_layers=4,act_multi_label='softmax'):
 
     def d_layer(layer_input, filters, f_size=4, normalization=True):
         """Discriminator layer"""
@@ -160,7 +160,7 @@ def build_discriminator(img_shape,df,num_classes,num_layers=4):
 
     class_logit = Dense(df*2**(num_layers-1))(flat_repr)
     class_logit = LeakyReLU(alpha=0.2)(class_logit)
-    class_prob = Dense(num_classes, activation='softmax')(class_logit)
+    class_prob = Dense(num_classes, activation=act_multi_label)(class_logit)
 
     #### 
     #label = Input(shape=(1,), dtype='int32')
