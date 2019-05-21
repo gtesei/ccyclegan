@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import cv2
 
 class DataLoader():
-    def __init__(self, dataset_name, img_res=(48, 48,1),path_csv=None):
+    def __init__(self, dataset_name, img_res=(48, 48,1),path_csv=None,use_test_in_batch=False):
         self.dataset_name = dataset_name
         self.img_res = img_res
         self.img_vect_train = None 
@@ -15,10 +15,11 @@ class DataLoader():
         self.lab_vect_train = None 
         self.lab_vect_test = None 
         self.path_csv = path_csv 
-        self._load_internally()
-        
         ## dict
         self.lab_dict = {0: "Angry", 1: "Disgust" , 2: "Fear" , 3: "Happy" , 4: "Sad" , 5: "Surprise" , 6: "Neutral"}
+        self.use_test_in_batch = use_test_in_batch
+        ## load dataset 
+        self._load_internally()
 
     
     def _load_internally(self):
@@ -71,6 +72,10 @@ class DataLoader():
         self.img_vect_train_RGB = np.zeros((self.img_vect_train.shape[0],self.img_res[0],self.img_res[1],3))
         for i in range(self.img_vect_train_RGB.shape[0]):
             self.img_vect_train_RGB[i] = cv2.cvtColor(self.img_vect_train[i], cv2.COLOR_GRAY2RGB)
+
+        if self.use_test_in_batch: 
+            self.lab_vect_train = np.concatenate([self.lab_vect_train,self.lab_vect_test])
+            self.img_vect_train = np.concatenate([self.img_vect_train,self.img_vect_test])
                 
     def load_data(self, domain=None, batch_size=1, is_testing=False,convertRGB=False):
         if is_testing: 
