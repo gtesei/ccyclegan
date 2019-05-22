@@ -10,6 +10,8 @@ Generative adversarial networks has been widely explored for generating realisti
 FER2013 consists of 28,709 48x48 pixel grayscale images of faces annotated with the emotion of facial expression as one of seven categories (0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral). The faces have been automatically registered so that the face is more or less centered and occupies about the same amount of space in each image.
 You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) and put __fer2013.csv__ under the folder __datasets__. 
 
+**Note: this is a dataset of unpaired images, i.e. for a given person/facial expression there are NOT other images of the such person with different facial expressions.**
+
 <img src="images/fer2013_sample.png" align="middle" /> 
 
 ## Exemplar Results 
