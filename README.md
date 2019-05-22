@@ -12,6 +12,16 @@ You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challeng
 
 <img src="images/fer2013_sample.png" align="middle" /> 
 
+## Exemplar Results 
+
+### [T24] [Cycle-consistency loss = GAN loss = Multiclass classification loss]
+
+ <img src="images/GOOD/t24/92_400__t24_OK.png" align="middle" /> 
+
+ <img src="images/GOOD/t24/117_400__t24__OK.png" align="middle" /> 
+
+ <img src="images/GOOD/t24/126_200_t24_OK.png" align="middle" /> 
+
 ## Experiment Log
 
 Id | Code | Description | Notes | 
