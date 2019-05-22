@@ -1,6 +1,8 @@
 # Conditional Cycle-Consistent GAN
 Generative adversarial networks has been widely explored for generating realistic images but their capabilities in multimodal image-to-image translations where a single input may correspond to many possible outputs in a conditional generative model setting have been vaguely explored (Zhu et al., 2017). Moreover, applying such capabilities of GANs in the context of facial expression generation, where even relatively little unnatural distortions of generated images can be easily detectable by a human, to my knowledge, is a green field. Thus, the novelty of this study consists in experimenting the synthesis of facial expressions, i.e. learning to translate an image from a domain X (e.g. the face image of a person) conditioned on a given facial expression label (e.g. “joy”) to the same domain X but conditioned on a different facial expression label (e.g. “surprise”). 
 
+**Note: this is an unpaired image-to-image translation problem.**
+
 ## Installation
     $ git https://github.com/gtesei/ccyclegan.git
     $ cd ccyclegan/
@@ -12,7 +14,7 @@ You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challeng
 
 <img src="images/fer2013_sample.png" align="middle" /> 
 
-**Note: this is a dataset of unpaired images, i.e. for a given person/facial expression there are NOT other images of the such person with different facial expressions.**
+**Note: this is a dataset of unpaired images, i.e. for a given person/facial expression there are NOT other images of the same person with different facial expressions.**
 
 ## Exemplar Results 
 
