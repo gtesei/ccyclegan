@@ -14,7 +14,16 @@ You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challeng
 
 ## Exemplar Results 
 
-### [T24] [Cycle-consistency loss = GAN loss = Multiclass classification loss]
+### [T25] [Reconstruction Loss Weight (G) = Adversarial Loss Weight (G/D) = Facial Expression Classification Loss Weight (G/D); More Stable Training Procedure (G)]
+
+<img src="images/GOOD/t25/122_400__t25__OK.png" align="middle" /> 
+
+<img src="images/GOOD/t25/47_400___t25__OK.png" align="middle" /> 
+
+<img src="images/GOOD/t25/122_0__t25__OK.png" align="middle" /> 
+
+
+### [T24] [Reconstruction Loss Weight (G) = Adversarial Loss Weight (G/D) = Facial Expression Classification Loss Weight (G/D)]
 
  <img src="images/GOOD/t24/92_400__t24_OK.png" align="middle" /> 
 
