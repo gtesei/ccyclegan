@@ -46,6 +46,23 @@ C2 | classifier2.py | ResNet50 pre-trained on ImageNet (RGG-images). Note: image
 T7 | ccyclegan_t7.py | Let's use ResNet50 pre-trained on ImageNet as D. | Generated images not very realistic and D-accuracy~100% |
 T8 | ccyclegan_t8.py | Change the training procedure removing shuffling and training D only on real given y_true samples, i.e. removing real given y_false samples. | Discriminator has ~100% accuracy on training set, reconstruction loss is low and G-loss is high compared with D-loss.  |
 T9 | ccyclegan_t9.py | Let's use ResNet50 pre-trained on ImageNet as D like T7 but let's freeze it. | Generated images not very realistic and reconstruction loss is low. |
+T10 | ccyclegan_t10.py | x2 GAN loss weight (G)   | No significative changes from previous model |
+T11 | ccyclegan_t11.py | Class label ecoded after convolutional layers (G).     | Some enhancements. Face expressions are better. Needs to be more realistic.  |
+T12 | ccyclegan_t12.py | Dropout as regularization technique.    | Not very helpful.   |
+T13 | ccyclegan_t13.py | Like T11, just trained longer(300 epochs).    | Some enhancements. Face expressions are better. Needs to be more realistic.  |
+T14 | ccyclegan_t14.py | Class label ecoded after convolutional layers (D).      | Not very helpful.  |
+T15 | ccyclegan_t15.py | Like T14. Removed the batch of real images with wrong labels to the discriminator.      | Not very helpful.  |
+T16 | ccyclegan_t16.py | Like T11. Removed the batch of real images with wrong labels to the discriminator.      | Not very helpful.  |
+**T17** | **ccyclegan_t17.py** | **Generator divided into G_enc (responsible to encode image into latent space) and G_dec (responsible to decode latent vector into image)**    | **This change is conceptually correct and I have kept in following models, but results here are not very different**  |
+T18 | ccyclegan_t18.py | Like T17 but with same weights for loss functions  | Results are not very different  |
+T19 | ccyclegan_t19.py | Like T17 but adversarial loss (G/D) is 1/7 of facial classification loss (G/D)  | Results are not very different  |
+**T20** | **ccyclegan_t20.py** | **Like T17 but added linear a transformation layer (concatenation of class label to latent vector + dense block + LeakyReLU block + 1x1 convolution to have the correct number of channels) between G_enc and D_dec.**  | **This change is conceptually correct and I have kept in following models, but results here are not very different**   |
+**T21** | **ccyclegan_t21.py** | **Like T20 but sigmoid instead of softmax as last block for face classification (G/D)**  | **This change is conceptually correct and I have kept in following models, but results here are not very different**   |
+**T22** | **ccyclegan_t22.py** | **Like T21 but during the D training for generated images created a new 0-label for fake facial expressions. The outputs from sigmoids are forced to be zero in case of fake expressions in D instead of the desired  class label. In turn, this force G to learn better as oterwise, it would be penalized twice (gan real/fake loss + gan facial expression loss)**  | **This change is conceptually correct and I have kept in following models, but results here are not very different**   |
+T23 | ccyclegan_t24.py | Like T22, just trained longer (400 epochs).  | Results are not very different    |
+**T24** | **ccyclegan_t22.py** | **Like T21 but training procedure of D/G significatively changed. For each sample, all the other 7-1=6 possible face expressions are generated (G) and used to train D/G.**  | **Much better results**   |
+T25 | ccyclegan_t25.py | Just code refactoring and sample shuffling is added to G training.  | Still good results, perhaps even better. G loss looks better after 200 epochs (shuffling looks like to stabilize training procedure).   |
+
 
 
 
