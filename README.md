@@ -7,6 +7,9 @@ Generative adversarial networks has been widely explored for generating realisti
     $ git https://github.com/gtesei/ccyclegan.git
     $ cd ccyclegan/
     $ sudo pip3 install -r requirements.txt
+
+## Train
+    $ python ... best model here ... 
     
 ## Dataset 
 FER2013 consists of 28,709 48x48 pixel grayscale images of faces annotated with the emotion of facial expression as one of seven categories (0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral). The faces have been automatically registered so that the face is more or less centered and occupies about the same amount of space in each image.
