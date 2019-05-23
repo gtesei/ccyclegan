@@ -73,9 +73,17 @@ class DataLoader():
         for i in range(self.img_vect_train_RGB.shape[0]):
             self.img_vect_train_RGB[i] = cv2.cvtColor(self.img_vect_train[i], cv2.COLOR_GRAY2RGB)
 
+        ##
+        leo = cv2.imread('./images/leo_gray__crop_48_48.jpg', cv2.IMREAD_GRAYSCALE )
+        self.leo = leo.reshape((1,self.img_res[0],self.img_res[1],self.img_res[2]))
+        self.leo_lab = 6 * np.ones( 1 , 'int32' ) # neutral 
+        
         if self.use_test_in_batch: 
-            self.lab_vect_train = np.concatenate([self.lab_vect_train,self.lab_vect_test])
-            self.img_vect_train = np.concatenate([self.img_vect_train,self.img_vect_test])
+            self.lab_vect_train = np.concatenate([self.lab_vect_train,self.lab_vect_test,self.leo_lab])
+            self.img_vect_train = np.concatenate([self.img_vect_train,self.img_vect_test,self.leo])
+
+    def load_leo(self):
+        return self.leo_lab , self.leo
                 
     def load_data(self, domain=None, batch_size=1, is_testing=False,convertRGB=False):
         if is_testing: 
