@@ -18,6 +18,7 @@ import sys
 from data_loader import DataLoader
 from keras.layers import Concatenate, Dense, LSTM, Input, concatenate
 import numpy as np
+import pandas as pd 
 import os
 import random 
 
@@ -104,8 +105,8 @@ class CCycleGAN():
                                     'mae'],
                             loss_weights=[  
                             1 ,                 # g_loss gan 
-                            10 ,                # g_loss class  
-                            100                 # reconstruction loss
+                            2 ,                 # g_loss class  
+                            1                   # reconstruction loss
                             ],
                             optimizer=optimizer)
     
@@ -128,6 +129,11 @@ class CCycleGAN():
     def train(self, epochs, batch_size=1, sample_interval=50 , d_g_ratio=5):
 
         start_time = datetime.datetime.now()
+        # logs 
+        epoch_history, batch_i_history,  = [] , []   
+        d_gan_loss_history, d_gan_accuracy_history, d_cl_loss_history, d_cl_accuracy_history = [], [], [], [] 
+        g_gan_loss_history, g_cl_loss_history = [] , [] 
+        reconstr_history = [] 
 
         # Adversarial loss ground truths
         valid = np.ones((batch_size,1) )
@@ -213,6 +219,7 @@ class CCycleGAN():
                         labels1_all_5,
                         labels1_all_6])
 
+                    # I know this should be outside the loop; left here to make code more understandable 
                     _valid = np.concatenate([
                         valid,
                         valid,
@@ -240,12 +247,34 @@ class CCycleGAN():
                             g_loss[1],g_loss[2],g_loss[3],
                             elapsed_time))
 
+                    # log
+                    epoch_history.append(epoch) 
+                    batch_i_history.append(batch_i)
+                    d_gan_loss_history.append(d_loss[1])
+                    d_gan_accuracy_history.append(100*d_loss[3])
+                    d_cl_loss_history.append(d_loss[2])
+                    d_cl_accuracy_history.append(100*d_loss[4])
+                    g_gan_loss_history.append(g_loss[1])
+                    g_cl_loss_history.append(g_loss[2])
+                    reconstr_history.append(g_loss[3])
+
                 # If at save interval => save generated image samples
                 if batch_i % sample_interval == 0:
                     self.sample_images(epoch, batch_i)
                     self.sample_images(epoch, batch_i,use_leo=True)
-                    
-        
+
+                    train_history = pd.DataFrame({
+                        'epoch': epoch_history, 
+                        'batch': batch_i_history, 
+                        'd_gan_loss': d_gan_loss_history, 
+                        'd_gan_accuracy' : d_gan_accuracy_history,
+                        'd_cl_loss': d_cl_loss_history, 
+                        'd_cl_accuracy': d_cl_accuracy_history, 
+                        'g_gan_loss': g_gan_loss_history, 
+                        'g_cl_loss': g_cl_loss_history, 
+                        'reconstr_loss': reconstr_history
+                    })
+                    train_history.to_csv(str(sys.argv[0]).split('.')[0]+'_train_log.csv',index=False)
 
     def sample_images(self, epoch, batch_i, use_leo=False):
         ## disc
@@ -253,20 +282,15 @@ class CCycleGAN():
 
         gan_pred_prob,class_pred_prob = self.d.predict(imgs_d)
         
-        #print("gan_pred_prob:",gan_pred_prob.shape,gan_pred_prob) #64x1
         gan_pred = (gan_pred_prob > 0.5)*1.0
         gan_pred = gan_pred.reshape((64,))
-        #print("gan_pred:",gan_pred.shape,gan_pred)  
-        #print("class_pred_prob:",class_pred_prob.shape,class_pred_prob) #64x7 
+        
         class_pred = np.argmax(class_pred_prob,axis=1)
-        #print("class_pred:",class_pred.shape,class_pred)  
-        #print("labels0_d:",labels0_d)
 
         gan_test_accuracy = accuracy_score(y_true=np.ones(64), y_pred=gan_pred)
         class_test_accuracy = accuracy_score(y_true=labels0_d, y_pred=class_pred)
 
-        print("*** gan_test_accuracy   :",gan_test_accuracy,"***")
-        print("*** class_test_accuracy :",class_test_accuracy,"***")
+        print("*** TEST *** [D_gan accuracy   :",gan_test_accuracy,"] [D_cl accuracy :",class_test_accuracy,"]")
 
         ## gen         
         if use_leo:
@@ -283,12 +307,7 @@ class CCycleGAN():
         labels1_all_5 = to_categorical(labels1_all[:,4], num_classes=self.num_classes)
         labels1_all_6 = to_categorical(labels1_all[:,5], num_classes=self.num_classes)
 
-        # Demo (for GIF)
-        #imgs_A = self.data_loader.load_img('datasets/apple2orange/testA/n07740461_1541.jpg')
-        #imgs_B = self.data_loader.load_img('datasets/apple2orange/testB/n07749192_4241.jpg')
-
-        # Translate images to the other domain
-        #fake_ = self.g.predict([labels1_,imgs_])
+        # Translate images 
         zs1_,zs2_,zs3_,zs4_ = self.g_enc.predict(imgs_)
         fake_1 = self.g_dec.predict([zs1_,zs2_,zs3_,zs4_,labels1_all_1])
         fake_2 = self.g_dec.predict([zs1_,zs2_,zs3_,zs4_,labels1_all_2])
@@ -297,7 +316,7 @@ class CCycleGAN():
         fake_5 = self.g_dec.predict([zs1_,zs2_,zs3_,zs4_,labels1_all_5])
         fake_6 = self.g_dec.predict([zs1_,zs2_,zs3_,zs4_,labels1_all_6])
       
-        # Translate back to original domain
+        # Reconstruct image 
         reconstr_ = self.g_dec.predict([zs1_,zs2_,zs3_,zs4_,labels0_cat])
 
         gen_imgs = np.concatenate([imgs_, 
@@ -345,4 +364,4 @@ class CCycleGAN():
 
 if __name__ == '__main__':
     gan = CCycleGAN()
-    gan.train(epochs=200, batch_size=64, sample_interval=200 , d_g_ratio=1)
+    gan.train(epochs=400, batch_size=64, sample_interval=200 , d_g_ratio=1)
