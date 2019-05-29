@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import cv2
 
 class DataLoader():
-    def __init__(self, dataset_name, img_res=(48, 48,1),path_csv=None,use_test_in_batch=False):
+    def __init__(self, dataset_name, img_res=(48, 48,1),path_csv=None,use_test_in_batch=False,normalize=True):
         self.dataset_name = dataset_name
         self.img_res = img_res
         self.img_vect_train = None 
@@ -18,6 +18,7 @@ class DataLoader():
         ## dict
         self.lab_dict = {0: "Angry", 1: "Disgust" , 2: "Fear" , 3: "Happy" , 4: "Sad" , 5: "Surprise" , 6: "Neutral"}
         self.use_test_in_batch = use_test_in_batch
+        self.normalize = normalize 
         ## load dataset 
         self._load_internally()
 
@@ -48,7 +49,8 @@ class DataLoader():
         for i in range(len(raw_data)):
             img = raw_data["pixels"][i] 
             x_pixels = np.array(img.split(" "), 'float32')
-            x_pixels = x_pixels/127.5 - 1.
+            if self.normalize:
+                x_pixels = x_pixels/127.5 - 1.
             x_pixels = x_pixels.reshape(self.img_res)
             us = raw_data["Usage"][i] 
             if us == 'Training':
@@ -219,6 +221,7 @@ if __name__ == '__main__':
         axs[1,1].axis('off')
         break
     plt.show() 
+    dl = DataLoader(dataset_name='fer2013',img_res=(48,48,1),normalize=False)
     for batch_i, (labels , batch_images) in enumerate(dl.load_batch(batch_size=5)):
         print("batch_i:",batch_i)
         print("labels:",labels.shape)
@@ -231,8 +234,8 @@ if __name__ == '__main__':
         axs[0,0].set_title(dl.lab_dict[labels[0]])
         axs[0,0].axis('off')
         #
-        axs[0,1].imshow( batch_images[1].squeeze() , cmap='gray')
-        axs[0,1].set_title(dl.lab_dict[labels[1]])
+        axs[0,1].imshow( batch_images[0].squeeze() , cmap='gray')
+        axs[0,1].set_title(dl.lab_dict[labels[0]])
         axs[0,1].axis('off')
         #
         axs[1,0].imshow( batch_images[2].squeeze() , cmap='gray')
@@ -244,5 +247,6 @@ if __name__ == '__main__':
         axs[1,1].axis('off')
         break
     plt.show() 
+    
         
          

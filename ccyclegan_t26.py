@@ -105,7 +105,7 @@ class CCycleGAN():
                                     'mae'],
                             loss_weights=[  
                             1 ,                 # g_loss gan 
-                            2 ,                 # g_loss class  
+                            1 ,                 # g_loss class  
                             1                   # reconstruction loss
                             ],
                             optimizer=optimizer)
