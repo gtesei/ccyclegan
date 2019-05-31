@@ -384,4 +384,4 @@ if __name__ == '__main__':
         rec_loss_w=1, 
         adam_lr=0.0002,adam_beta_1=0.5,adam_beta_2=0.999
         )
-    gan.train(epochs=400, batch_size=64, sample_interval=200)
+    gan.train(epochs=80, batch_size=64, sample_interval=200)
