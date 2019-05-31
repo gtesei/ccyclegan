@@ -31,26 +31,41 @@ from sklearn.metrics import accuracy_score
 from  models import *
 
 class CCycleGAN():
-    def __init__(self,img_rows = 48,img_cols = 48,channels = 1, num_classes=7):
+    def __init__(self,img_rows = 48,img_cols = 48,channels = 1, num_classes=7,
+        d_gan_loss_w=1,d_cl_loss_w=1,
+        g_gan_loss_w=1,g_cl_loss_w=1,
+        rec_loss_w=1,
+        adam_lr=0.0002,adam_beta_1=0.5,adam_beta_2=0.999):
         # Input shape
         self.img_rows = img_rows
         self.img_cols = img_cols
         self.channels = channels
         self.img_shape = (self.img_rows, self.img_cols, self.channels)
         self.num_classes = num_classes
-        
-        ## dict
-        self.lab_dict = {0: "Angry", 1: "Disgust" , 2: "Fear" , 3: "Happy" , 4: "Sad" , 5: "Surprise" , 6: "Neutral"}
+
+        # Loss weights 
+        self.d_gan_loss_w = d_gan_loss_w
+        self.d_cl_loss_w = d_cl_loss_w
+        self.g_gan_loss_w = g_gan_loss_w
+        self.g_cl_loss_w = g_cl_loss_w
+        self.rec_loss_w = rec_loss_w
+
+        # optmizer params 
+        self.adam_lr = adam_lr
+        self.adam_beta_1 = adam_beta_1
+        self.adam_beta_2 = adam_beta_2
 
         # Configure data loader
         self.dataset_name = 'fer2013'
         self.data_loader = DataLoader(dataset_name=self.dataset_name,img_res=self.img_shape,use_test_in_batch=True)
+        # label dict
+        self.lab_dict = {0: "Angry", 1: "Disgust" , 2: "Fear" , 3: "Happy" , 4: "Sad" , 5: "Surprise" , 6: "Neutral"}
 
         # Number of filters in the first layer of G and D
         self.gf = 32
         self.df = 64
 
-        optimizer = Adam(0.0002, 0.5) 
+        optimizer = Adam(self.adam_lr, self.adam_beta_1, self.adam_beta_2) 
 
         # Build and compile the discriminators
         self.d = build_discriminator(img_shape=self.img_shape,df=64,num_classes=self.num_classes,act_multi_label='sigmoid')
@@ -63,8 +78,8 @@ class CCycleGAN():
             optimizer=optimizer,
             metrics=['accuracy'],
             loss_weights=[
-            1 , # gan
-            1   # class
+            self.d_gan_loss_w , # gan
+            self.d_cl_loss_w   # class
             ])
 
         #-------------------------
@@ -104,9 +119,9 @@ class CCycleGAN():
         self.combined.compile(loss=['binary_crossentropy','categorical_crossentropy',
                                     'mae'],
                             loss_weights=[  
-                            1 ,                 # g_loss gan 
-                            1 ,                 # g_loss class  
-                            1                   # reconstruction loss
+                            self.g_gan_loss_w ,                 # g_loss gan 
+                            self.g_cl_loss_w  ,                 # g_loss class  
+                            self.rec_loss_w                     # reconstruction loss
                             ],
                             optimizer=optimizer)
     
@@ -261,7 +276,7 @@ class CCycleGAN():
                 # If at save interval => save generated image samples
                 if batch_i % sample_interval == 0:
                     self.sample_images(epoch, batch_i)
-                    self.sample_images(epoch, batch_i,use_leo=True)
+                    #self.sample_images(epoch, batch_i,use_leo=True)
 
                     train_history = pd.DataFrame({
                         'epoch': epoch_history, 
@@ -363,5 +378,10 @@ class CCycleGAN():
 
 
 if __name__ == '__main__':
-    gan = CCycleGAN()
-    gan.train(epochs=400, batch_size=64, sample_interval=200 , d_g_ratio=1)
+    gan = CCycleGAN(
+        d_gan_loss_w=1,d_cl_loss_w=1,
+        g_gan_loss_w=1,g_cl_loss_w=1,
+        rec_loss_w=1, 
+        adam_lr=0.0002,adam_beta_1=0.5,adam_beta_2=0.999
+        )
+    gan.train(epochs=400, batch_size=64, sample_interval=200)

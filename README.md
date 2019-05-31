@@ -71,6 +71,7 @@ T19 | ccyclegan_t19.py | Like T17 but adversarial loss (G/D) is 1/7 of facial cl
 T23 | ccyclegan_t24.py | Like T22, just trained longer (400 epochs).  | Results are not very different    |
 **T24** | **ccyclegan_t22.py** | **Like T21 but training procedure of D/G significatively changed. For each sample, all the other 7-1=6 possible face expressions are generated (G) and used to train D/G.**  | **Much better results**   |
 T25 | ccyclegan_t25.py | Just code refactoring and sample shuffling is added to G training.  | Still good results, perhaps even better. G loss looks better after 200 epochs (shuffling looks like to stabilize training procedure).   |
+T26 | ccyclegan_t26.py | Code refactoring, experimented different combinations of Adversarial Loss Weight (G) vs. Facial Expression Classification Loss Weight (G): 1:1, 1:2, 2:1, 3:9, 10:100. Experimented lower learning rate (0.0001 vs. 0.0002). |  Confirmed best hyper-params. |
 
 
 
