@@ -459,13 +459,23 @@ if __name__ == '__main__':
                         'rec_loss_w': [1],
                         'adam_lr': [0.0002,0.0001]}
     run_opts = [dict(zip(tuned_parameters.keys(),v)) for v in product(*tuned_parameters.values())]
-    tun_grid = generate_tuning_grid(MAX_EPOCH = MAX_EPOCH, tuned_parameters = tuned_parameters)
+    #tun_grid = generate_tuning_grid(MAX_EPOCH = MAX_EPOCH, tuned_parameters = tuned_parameters)
+    print(">> loading tune grid ...")
+    tun_grid = pd.read_csv('ccyclegan_t27__hyper_params_fis_e200.csv')
+    print(tun_grid.head())
+    print("...")
+    print(tun_grid.tail())
     ## tune 
     for i,opt in enumerate(run_opts):
         #K.clear_session()
         print("*************************************************************")
         print(i,"/",len(run_opts))
         print(opt)
+        if i >= 2:
+        	print("> skipping ... ")
+        	break 
+        else:
+        	print("> computing ...")
         gan = CCycleGAN(
             d_gan_loss_w=opt['d_gan_loss_w'],d_cl_loss_w=opt['d_cl_loss_w'],
             g_gan_loss_w=opt['g_gan_loss_w'],g_cl_loss_w=opt['g_cl_loss_w'],
