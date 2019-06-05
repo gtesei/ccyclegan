@@ -9,7 +9,7 @@ Generative adversarial networks has been widely explored for generating realisti
     $ sudo pip3 install -r requirements.txt
 
 ## Train
-    $ python ... best model here ... 
+    $ python ccyclegan_t26.py
     
 ## Dataset 
 FER2013 consists of 28,709 48x48 pixel grayscale images of faces annotated with the emotion of facial expression as one of seven categories (0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral). The faces have been automatically registered so that the face is more or less centered and occupies about the same amount of space in each image.
@@ -21,7 +21,14 @@ You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challeng
 
 ## Exemplar Results 
 
-### [T25/26] [Reconstruction Loss Weight (G) = Adversarial Loss Weight (G/D) = Facial Expression Classification Loss Weight (G/D); More Stable Training Procedure (G)]
+### [26] [Reconstruction Loss Weight = 1/2 Adversarial Loss Weight = 1/2 Facial Expression Classification Loss Weight]
+
+<img src="images/GOOD/t26/2_2_1_92_200__ok.png" align="middle" /> 
+
+<img src="images/GOOD/t26/2_2_1_155_400____ok.png" align="middle" /> 
+
+
+### [T25/26] [Reconstruction Loss Weight = Adversarial Loss Weight = Facial Expression Classification Loss Weight ; More Stable Training Procedure (G)]
 
 <img src="images/GOOD/t25/122_400__t25__OK.png" align="middle" /> 
 
@@ -32,7 +39,7 @@ You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challeng
 <img src="images/GOOD/t26/42_0___OK__t26.png" align="middle" /> 
 
 
-### [T24] [Reconstruction Loss Weight (G) = Adversarial Loss Weight (G/D) = Facial Expression Classification Loss Weight (G/D)]
+### [T24] [Reconstruction Loss Weight = Adversarial Loss Weight = Facial Expression Classification Loss Weight]
 
  <img src="images/GOOD/t24/92_400__t24_OK.png" align="middle" /> 
 
