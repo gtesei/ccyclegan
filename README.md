@@ -1,5 +1,20 @@
 # Conditional Cycle-Consistent Generative Adversarial Networks (CCycleGAN)
-Generative adversarial networks has been widely explored for generating realistic images but their capabilities in multimodal image-to-image translations where a single input may correspond to many possible outputs in a conditional generative model setting have been vaguely explored (Zhu et al., 2017). Moreover, applying such capabilities of GANs in the context of facial expression generation, where even relatively little unnatural distortions of generated images can be easily detectable by a human, to my knowledge, is a green field. Thus, the novelty of this study consists in experimenting the synthesis of facial expressions, i.e. learning to translate an image from a domain X (e.g. the face image of a person) conditioned on a given facial expression label (e.g. “joy”) to the same domain X but conditioned on a different facial expression label (e.g. “surprise”). 
+Generative adversarial networks has been widely explored for generating photo-
+realistic images but their capabilities in multimodal image-to-image translations
+where a single input may correspond to many possible outputs in a conditional
+generative model setting have been vaguely explored. Moreover, applying such
+capabilities of GANs in the context of conditional facial expression generation and
+in absence of paired examples (i.e. learning a mapping between an input image and
+an output image using a training set without aligned image pairs), to our knowledge,
+is a green field. Thus, the novelty of this study consists in experimenting the
+synthesis of conditional facial expressions and we present an approach for learning
+to translate an image from a domain (e.g. the face image of a person) conditioned
+on a given facial expression label (e.g. joy) to the same domain but conditioned on
+a different facial expression label (e.g. surprise), in absence of paired examples.
+Our goal is to learn a mapping such that the distribution of generated images is
+indistinguishable from the distribution of real images using adversarial loss and
+cycle consistency loss. Qualitative results are presented, where paired training data
+does not exist, with a quantitative justification of hyper-parameters settings. 
 
 **Note: this is an unpaired image-to-image translation problem.**
 
