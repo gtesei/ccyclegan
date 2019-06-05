@@ -451,6 +451,7 @@ def generate_tuning_grid(MAX_EPOCH = 90,
 
 if __name__ == '__main__':
     ## create hyper-params grid 
+    RECOVER_POINT = 2 # set to 0 to do all 
     MAX_EPOCH = 200
     tuned_parameters = {'d_gan_loss_w': [1], 
                         'd_cl_loss_w' : [1], 
@@ -459,26 +460,27 @@ if __name__ == '__main__':
                         'rec_loss_w': [1],
                         'adam_lr': [0.0002,0.0001]}
     run_opts = [dict(zip(tuned_parameters.keys(),v)) for v in product(*tuned_parameters.values())]
-    #tun_grid = generate_tuning_grid(MAX_EPOCH = MAX_EPOCH, tuned_parameters = tuned_parameters)
-    print(">> loading tune grid ...")
-    tun_grid = pd.read_csv('ccyclegan_t27__hyper_params_fis_e200.csv')
-    print(tun_grid.head())
-    print("...")
-    print(tun_grid.tail())
+    if RECOVER_POINT == 0:
+    	tun_grid = generate_tuning_grid(MAX_EPOCH = MAX_EPOCH, tuned_parameters = tuned_parameters)
+    else:
+    	print(">> loading tune grid ...")
+    	tun_grid = pd.read_csv('ccyclegan_t27__hyper_params_fis_e200.csv')
+    	print(tun_grid.head())
+    	print("...")
+    	print(tun_grid.tail())
     ## tune 
     for i,opt in enumerate(run_opts):
         #K.clear_session()
         print("*************************************************************")
         print(i,"/",len(run_opts))
         print(opt)
-        if i >= 2:
-        	print("> skipping ... ")
-        	break 
+        if i < RECOVER_POINT: 
+        	print("> skipping ... ") 
         else:
         	print("> computing ...")
-        gan = CCycleGAN(
-            d_gan_loss_w=opt['d_gan_loss_w'],d_cl_loss_w=opt['d_cl_loss_w'],
-            g_gan_loss_w=opt['g_gan_loss_w'],g_cl_loss_w=opt['g_cl_loss_w'],
-            rec_loss_w=opt['rec_loss_w'], 
-            adam_lr=opt['adam_lr'],adam_beta_1=0.5,adam_beta_2=0.999)
-        gan.train(epochs=MAX_EPOCH, batch_size=64, tun_grid=tun_grid)
+	        gan = CCycleGAN(
+	            d_gan_loss_w=opt['d_gan_loss_w'],d_cl_loss_w=opt['d_cl_loss_w'],
+	            g_gan_loss_w=opt['g_gan_loss_w'],g_cl_loss_w=opt['g_cl_loss_w'],
+	            rec_loss_w=opt['rec_loss_w'], 
+	            adam_lr=opt['adam_lr'],adam_beta_1=0.5,adam_beta_2=0.999)
+        	gan.train(epochs=MAX_EPOCH, batch_size=64, tun_grid=tun_grid)
