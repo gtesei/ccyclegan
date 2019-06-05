@@ -118,7 +118,7 @@ class CCycleGAN():
         self.combined = Model(inputs=[img,label0,label1],
                               outputs=[ gan_valid, class_valid, 
                                         reconstr])
-        self.combined.compile(loss=['binary_crossentropy','binary_crossentropy',
+        self.combined.compile(loss=['binary_crossentropy','categorical_crossentropy',
                                     'mae'],
                             loss_weights=[  
                             self.g_gan_loss_w ,                 # g_loss gan 
