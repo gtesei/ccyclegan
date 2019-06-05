@@ -380,8 +380,8 @@ class CCycleGAN():
 if __name__ == '__main__':
     gan = CCycleGAN(
         d_gan_loss_w=1,d_cl_loss_w=1,
-        g_gan_loss_w=1,g_cl_loss_w=1,
+        g_gan_loss_w=2,g_cl_loss_w=2,
         rec_loss_w=1, 
         adam_lr=0.0002,adam_beta_1=0.5,adam_beta_2=0.999
         )
-    gan.train(epochs=80, batch_size=64, sample_interval=200)
+    gan.train(epochs=200, batch_size=64, sample_interval=200)

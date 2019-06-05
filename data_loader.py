@@ -67,6 +67,8 @@ class DataLoader():
         assert i_test == len(self.lab_vect_test) 
         assert i_test == len(self.img_vect_test) 
         
+        print("> loaded train:",len(self.img_vect_train),"   - test:",len(self.lab_vect_test) )
+        
         self.img_vect_test_RGB = np.zeros((self.img_vect_test.shape[0],self.img_res[0],self.img_res[1],3))
         for i in range(self.img_vect_test_RGB.shape[0]):
             self.img_vect_test_RGB[i] = cv2.cvtColor(self.img_vect_test[i], cv2.COLOR_GRAY2RGB)
