@@ -21,7 +21,7 @@ You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challeng
 
 ## Exemplar Results 
 
-### [26] [Reconstruction Loss Weight = 1/2 Adversarial Loss Weight = 1/2 Facial Expression Classification Loss Weight]
+### [T26] [Reconstruction Loss Weight = 1/2 Adversarial Loss Weight = 1/2 Facial Expression Classification Loss Weight]
 
 <img src="images/GOOD/t26/2_2_1_92_200__ok.png" align="middle" /> 
 
