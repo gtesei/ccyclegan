@@ -1,20 +1,19 @@
 # Conditional Cycle-Consistent Generative Adversarial Networks (CCycleGAN)
-Generative adversarial networks has been widely explored for generating photo-
-realistic images but their capabilities in multimodal image-to-image translations
-where a single input may correspond to many possible outputs in a conditional
-generative model setting have been vaguely explored. Moreover, applying such
-capabilities of GANs in the context of conditional facial expression generation and
-in absence of paired examples (i.e. learning a mapping between an input image and
-an output image using a training set without aligned image pairs), to our knowledge,
-is a green field. Thus, the novelty of this study consists in experimenting the
-synthesis of conditional facial expressions and we present an approach for learning
-to translate an image from a domain (e.g. the face image of a person) conditioned
-on a given facial expression label (e.g. joy) to the same domain but conditioned on
-a different facial expression label (e.g. surprise), in absence of paired examples.
-Our goal is to learn a mapping such that the distribution of generated images is
-indistinguishable from the distribution of real images using adversarial loss and
-cycle consistency loss. Qualitative results are presented, where paired training data
-does not exist, with a quantitative justification of hyper-parameters settings. 
+Generative adversarial networks has been widely explored for generating photorealistic
+images but their capabilities in multimodal image-to-image translations
+in a conditional generative model setting have been vaguely explored. Moreover,
+applying such capabilities of GANs in the context of facial expression generation
+conditioning on the emotion of facial expression and in absence of paired examples,
+to our knowledge, is almost a green field. Thus, the novelty of this study consists in
+experimenting the synthesis of conditional facial expressions and we present a novel
+approach (CCycleGANs) for learning to translate an image from a domain (e.g.
+the face images of a person) conditioned on a given emotion of facial expression
+(e.g. joy) to the same domain but conditioned on a different emotion of facial
+expression (e.g. surprise), in absence of paired examples. Our goal is to learn a
+mapping such that the distribution of generated images is indistinguishable from
+the distribution of real images using adversarial loss and cycle consistency loss.
+Qualitative results are presented, where paired training data does not exist, with a
+quantitative justification of optimal hyperparameters.
 
 **Note: this is an unpaired image-to-image translation problem.**
 
@@ -27,8 +26,8 @@ does not exist, with a quantitative justification of hyper-parameters settings.
     $ python ccyclegan_t26.py
     
 ## Dataset 
-FER2013 consists of 28,709 48x48 pixel grayscale images of faces annotated with the emotion of facial expression as one of seven categories (0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral). The faces have been automatically registered so that the face is more or less centered and occupies about the same amount of space in each image.
-You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) and put __fer2013.csv__ under the folder __datasets__. 
+FER2013 consists of 28,709/7,178 train/test 48x48 pixel grayscale images of faces annotated with the emotion of facial expression as one of seven categories (0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral). The faces have been automatically registered so that the face is more or less centered and occupies about the same amount of space in each image.
+thanks to its resolution led to a good trade-off between accuracy and model complexity allowing us to iterate quickly many times. You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) and put __fer2013.csv__ under the folder __datasets__.
 
 <img src="images/fer2013_sample.png" align="center" /> 
 
@@ -94,6 +93,7 @@ T23 | ccyclegan_t24.py | Like T22, just trained longer (400 epochs).  | Results 
 **T24** | **ccyclegan_t22.py** | **Like T21 but training procedure of D/G significatively changed. For each sample, all the other 7-1=6 possible face expressions are generated (G) and used to train D/G.**  | **Much better results**   |
 T25 | ccyclegan_t25.py | Just code refactoring and sample shuffling is added to G training.  | Still good results, perhaps even better. G loss looks better after 200 epochs (shuffling looks like to stabilize training procedure).   |
 T26 | ccyclegan_t26.py | Code refactoring, experimented different combinations of Adversarial Loss Weight (G) vs. Facial Expression Classification Loss Weight (G): 1:1, 1:2, 2:1, 3:9, 10:100. Experimented lower learning rate (0.0001 vs. 0.0002). |  Confirmed best hyper-params. |
+T27 | ccyclegan_t27__hyper_params.py | Frechet Inception Distance (FID) to to find the best mix of hyperparameters. |  Confirmed best hyper-params. |
 
 
 
