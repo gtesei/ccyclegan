@@ -25,7 +25,7 @@ import random
 import tensorflow as tf 
 
 from keras.utils import to_categorical
-
+import argparse
 from sklearn.metrics import accuracy_score
 
 from  models import *
@@ -378,10 +378,33 @@ class CCycleGAN():
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Train CCycleGAN')
+    parser.add_argument('-d_gan_loss_w', help='loss weight for discrim. real/fake', dest='d_gan_loss_w', type=int, default=1)
+    parser.add_argument('-d_cl_loss_w', help='loss weight for discrim. multiclass', dest='d_cl_loss_w', type=int, default=1)
+    parser.add_argument('-g_gan_loss_w', help='loss weight for gen. real/fake', dest='g_gan_loss_w', type=int, default=2)
+    parser.add_argument('-g_cl_loss_w', help='loss weight for gen. multiclass', dest='g_cl_loss_w', type=int, default=2)
+    parser.add_argument('-rec_loss_w', help='reconstr. loss weight', dest='rec_loss_w', type=int, default=2)
+    parser.add_argument('-adam_lr', help='Adam l.r.', dest='adam_lr', type=float, default=0.0002)
+    parser.add_argument('-adam_beta_1', help='Adam beta-1', dest='adam_beta_1', type=float, default=0.5)
+    parser.add_argument('-adam_beta_2', help='Adam beta-2', dest='adam_beta_2', type=float, default=0.999)
+    parser.add_argument('-epochs', help='N. epochs', dest='epochs', type=int, default=170)
+    parser.add_argument('-batch_size', help='batch size', dest='batch_size', type=int, default=64)
+    parser.add_argument('-sample_interval', help='sample interval', dest='sample_interval', type=int, default=200)
+    args = parser.parse_args()
+    
+    # print parameters
+    print('-' * 30)
+    print('Parameters .')
+    print('-' * 30)
+    for key, value in vars(args).items():
+        print('{:<20} := {}'.format(key, value))
+    print('-' * 30)
+
+    # CCycleGAN
     gan = CCycleGAN(
-        d_gan_loss_w=1,d_cl_loss_w=1,
-        g_gan_loss_w=2,g_cl_loss_w=2,
-        rec_loss_w=1, 
-        adam_lr=0.0002,adam_beta_1=0.5,adam_beta_2=0.999
+        d_gan_loss_w=args.d_gan_loss_w,d_cl_loss_w=args.d_cl_loss_w,
+        g_gan_loss_w=args.g_gan_loss_w,g_cl_loss_w=args.g_cl_loss_w,
+        rec_loss_w=args.rec_loss_w,
+        adam_lr=args.adam_lr,adam_beta_1=args.adam_beta_1,adam_beta_2=args.adam_beta_2
         )
-    gan.train(epochs=200, batch_size=64, sample_interval=200)
+    gan.train(epochs=args.epochs, batch_size=args.batch_size, sample_interval=args.sample_interval)
