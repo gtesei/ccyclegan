@@ -27,7 +27,7 @@ quantitative justification of optimal hyperparameters.
     
 ## Dataset 
 FER2013 consists of 28,709/7,178 train/test 48x48 pixel grayscale images of faces annotated with the emotion of facial expression as one of seven categories (0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral). The faces have been automatically registered so that the face is more or less centered and occupies about the same amount of space in each image.
-thanks to its resolution led to a good trade-off between accuracy and model complexity allowing us to iterate quickly many times. You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) and put __fer2013.csv__ under the folder __datasets__.
+Thanks to its resolution this is a good trade-off between accuracy and model complexity allowing to iterate quickly many times. You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) and put __fer2013.csv__ under the folder __datasets__.
 
 <img src="images/fer2013_sample.png" align="center" /> 
 
