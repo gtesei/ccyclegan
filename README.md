@@ -25,6 +25,23 @@ quantitative justification of optimal hyperparameters.
 ## Train
     $ python ccyclegan_t26.py
     
+    # Defaults
+    $ python ccyclegan_t26.py \
+        -d_gan_loss_w 1 \
+        -d_cl_loss_w 1 \
+        -g_gan_loss_w 2 \
+        -g_cl_loss_w 2 \
+        -rec_loss_w 1  \
+        -adam_lr 0.0002 \
+        -adam_beta_1 0.5 \
+        -adam_beta_2 0.999 \
+        -epochs EPOCHS  170   \
+        -batch_size 64   \
+        -sample_interval 200 \
+        
+    # Usage
+    $ python ccyclegan_t26.py -h
+    
 ## Dataset 
 FER2013 consists of 28,709/7,178 train/test 48x48 pixel grayscale images of faces annotated with the emotion of facial expression as one of seven categories (0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral). The faces have been automatically registered so that the face is more or less centered and occupies about the same amount of space in each image.
 Thanks to its resolution this is a good trade-off between accuracy and model complexity allowing to iterate quickly many times. You need to download the dataset from [Kaggle](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) and put __fer2013.csv__ under the folder __datasets__.
