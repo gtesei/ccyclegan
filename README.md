@@ -15,6 +15,8 @@ the distribution of real images using adversarial loss and cycle consistency los
 Qualitative results are presented, where paired training data does not exist, with a
 quantitative justification of optimal hyperparameters.
 
+[Paper](https://openreview.net/pdf?id=HJg6j3-oeB) 
+
 **Note: this is an unpaired image-to-image translation problem.**
 
 ## Installation
